@@ -21,12 +21,15 @@ from hello_api import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path ('', views.index),
-    path('user', views.save_user)
-]
+    path('', views.index),
+    path('user', views.save_user),
+    path('animal', views.save_animal),
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path ('', views.index),
-    path('animal', views.save_animal)
+    # Videojuegos (CRUD)
+    path('videojuego/', views.videojuego),
+    path('save_videojuego/', views.save_videojuego),
+    path('get_videojuegos/', views.get_videojuegos),
+    path('get_videojuego/<int:id_videojuego>/', views.get_videojuego),
+    path('update_videojuego/<int:id_videojuego>/', views.update_videojuego),
+    path('delete_videojuego/<int:id_videojuego>/', views.delete_videojuego),
 ]
