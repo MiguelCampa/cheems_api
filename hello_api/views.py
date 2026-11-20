@@ -164,7 +164,7 @@ def update_videojuego(request, id_videojuego):
         anio = data.get('anio')
 
         if nombre is None and anio is None:
-            return JsonResponse({"error": "Debes enviar al menos 'nombre' o 'anio' para actualizar."}, status=400)
+            return JsonResponse({"error": "Debes enviar al menos 'nombre' o 'anio' para editar."}, status=400)
 
         if nombre is not None and not str(nombre).strip():
             return JsonResponse({"error": "El nombre no puede estar vacío."}, status=400)
@@ -175,25 +175,24 @@ def update_videojuego(request, id_videojuego):
             except (TypeError, ValueError):
                 return JsonResponse({"error": "El año debe ser un número entero."}, status=400)
 
-        videojuego_actualizado = Videojuego.actualizar_videojuego(
+        videojuego_editado = Videojuego.actualizar_videojuego(
             id_videojuego=id_videojuego,
             nombre=str(nombre).strip() if nombre is not None else None,
             anio=anio
         )
 
-        if not videojuego_actualizado:
+        if not videojuego_editado:
             return JsonResponse({"success": False, "message": "Videojuego no encontrado."}, status=404)
 
         return JsonResponse({
             "success": True,
-            "message": "Videojuego actualizado exitosamente.",
-            "videojuego": videojuego_actualizado
+            "message": "Videojuego editado exitosamente.",
+            "videojuego": videojuego_editado
         }, status=200)
     except json.JSONDecodeError:
         return JsonResponse({"error": "JSON inválido."}, status=400)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-
 
 @csrf_exempt
 @require_http_methods(["DELETE", "POST"])
